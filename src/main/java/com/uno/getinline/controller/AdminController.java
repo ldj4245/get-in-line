@@ -81,6 +81,37 @@ public class AdminController {
         return "redirect:/admin/confirm";
     }
 
+    @ResponseStatus(HttpStatus.SEE_OTHER)
+    @GetMapping("/places/{placeId}/delete")
+    public String deletePlace(
+            @PathVariable Long placeId,
+            RedirectAttributes redirectAttributes
+    ){
+        placeService.removePlace(placeId);
+
+
+        redirectAttributes.addFlashAttribute("adminOperationStatus",AdminOperationStatus.DELETE);
+        redirectAttributes.addFlashAttribute("redirectUrl","/admin/places");
+
+        return "redirect:/admin/confirm";
+    }
+
+    @ResponseStatus(HttpStatus.SEE_OTHER)
+    @GetMapping("/events/{eventId}/delete")
+    public String deleteEvent(
+            @PathVariable Long eventId,
+            RedirectAttributes redirectAttributes
+    ){
+        eventService.removeEvent(eventId);
+
+        redirectAttributes.addFlashAttribute("adminOperationStatus",
+                AdminOperationStatus.DELETE);
+
+        redirectAttributes.addFlashAttribute("redirectUrl","/admin/events");
+
+        return "redirect:/admin/confirm";
+
+    }
 
     @GetMapping("/places/{placeId}/newEvent")
     public String newEvent(@PathVariable Long placeId, Model model){
