@@ -31,6 +31,9 @@ public class Event {
     private Long id;
 
 
+
+    //하나의 장소에는 여러개의 이벤트가 존재할 수 있다.
+    //ex 배드민턴장 1시 3시 4시 의 여러개의 이벤트가 존재 가능함.
     @Setter
     @ManyToOne(optional = false)
     private Place place;
