@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(
         controllers = BaseErrorController.class,
@@ -28,15 +28,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         this.mvc = mvc;
     }
 
-    @DisplayName("[view][GET] 에러 페이지 - 페이지 없음")
-    @Test
-    void givenWrongURI_whenRequestingPage_thenReturns404ErrorPage() throws Exception {
-        // Given
 
-        // When & Then
-        mvc.perform(get("/wrong-uri"))
+    @DisplayName("[view][GET] 기본 페이지 요청")
+    @Test
+    void givenNothing_whenRequestingRootPage_thenReturnsIndexPage() throws Exception{
+        //Given
+
+        //When & Then
+        mvc.perform(get("/"))
                 .andExpect(status().isNotFound())
-                .andDo(print());
-    }
+                .andExpect(redirectedUrl("/events"))
+                .andExpect(view().name("redirect:/events"));    }
 
 }
